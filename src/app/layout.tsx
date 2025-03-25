@@ -1,6 +1,7 @@
 //prettier-ignore
 import { OpenSansLight, OpenSansRegular, OpenSansMedium, OpenSansSemiBold, OpenSansBold, OpenSansExtraBold } from "@/lib/fonts";
-import NavbarExport from "@/components/NavbarExport";
+import NavbarExport from "@/components/layout/NavbarExport";
+import FooterExport from "@/components/layout/FooterExport";
 import TopLoader from "@/components/ui/TopLoader";
 import { DOMAIN_BASE_URL } from "@/lib/constants";
 import "../../public/styles/globals.css";
@@ -172,6 +173,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 				<TopLoader />
 				<NavbarExport />
 				<main>{children}</main>
+				<FooterExport />
 			</body>
 		</html>
 	);

@@ -129,7 +129,7 @@ const NavbarExport = () => {
 												initial={{ width: "0%" }}
 												animate={{ width: "15%" }}
 												transition={{ delay: 0.3 + 0.1 * index, duration: 0.4 }}
-												className="mr-6 h-[2px] bg-[#000000]"
+												className="mr-6 h-[2px] bg-[#000000] rounded-full"
 											/>
 
 											<span

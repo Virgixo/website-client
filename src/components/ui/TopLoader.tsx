@@ -14,21 +14,20 @@ const TopLoader = () => {
 			setLoading(true);
 			setProgress(0);
 
-			setTimeout(() => setProgress(80), 50);
+			setTimeout(() => setProgress(90), 25);
 
 			setTimeout(() => {
 				const interval = setInterval(() => {
 					setProgress((oldProgress) => {
 						if (oldProgress >= 100) {
 							clearInterval(interval);
-
 							return oldProgress;
 						}
 
-						return oldProgress + 0.1;
+						return oldProgress + 0.2;
 					});
-				}, 100);
-			}, 1000);
+				}, 50);
+			}, 500);
 
 			return () => {};
 		};
@@ -40,8 +39,8 @@ const TopLoader = () => {
 				setTimeout(() => {
 					setLoading(false);
 					setProgress(0);
-				}, 400);
-			}, 1500);
+				}, 200);
+			}, 750);
 		};
 
 		startLoading();
