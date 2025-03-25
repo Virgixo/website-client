@@ -1,5 +1,6 @@
 //prettier-ignore
 import { OpenSansLight, OpenSansRegular, OpenSansMedium, OpenSansSemiBold, OpenSansBold, OpenSansExtraBold } from "@/lib/fonts";
+import CookiesConsent from "@/components/layout/CookiesConsent";
 import NavbarExport from "@/components/layout/NavbarExport";
 import FooterExport from "@/components/layout/FooterExport";
 import TopLoader from "@/components/ui/TopLoader";
@@ -172,6 +173,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 			>
 				<TopLoader />
 				<NavbarExport />
+				<CookiesConsent />
 				<main>{children}</main>
 				<FooterExport />
 			</body>
