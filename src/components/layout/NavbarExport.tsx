@@ -2,7 +2,7 @@
 
 import { OpenSansMedium, OpenSansSemiBold } from "@/lib/fonts";
 
-import { motion as m, AnimatePresence } from "framer-motion";
+import { motion as m, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { RiMailSendLine } from "react-icons/ri";
 import * as React from "react";
 import Image from "next/image";
@@ -10,6 +10,16 @@ import Link from "next/link";
 
 const NavbarExport = () => {
 	const [isNavbarMenuOpen, setIsNavbarMenuOpen] = React.useState(false);
+	const [isNavbarVisible, setIsNavbarVisible] = React.useState(true);
+	const [lastScrollY, setLastScrollY] = React.useState(0);
+	const { scrollY } = useScroll();
+
+	useMotionValueEvent(scrollY, "change", (latest) => {
+		const currentScrollY = latest;
+
+		setIsNavbarVisible(currentScrollY < lastScrollY || currentScrollY < 100);
+		setLastScrollY(currentScrollY);
+	});
 
 	React.useEffect(() => {
 		const handleResizeScreen = () => {
@@ -37,7 +47,12 @@ const NavbarExport = () => {
 
 	return (
 		<>
-			<nav className="fixed top-0 right-0 left-0 z-[60] mx-auto w-full bg-[#ffffff] px-4 py-4">
+			<m.nav 
+				initial={{ y: 0 }}
+				animate={{ y: isNavbarVisible ? 0 : -100 }}
+				transition={{ duration: 0.3 }}
+				className="fixed top-0 right-0 left-0 z-[60] mx-auto w-full bg-[#ffffff] px-4 py-4"
+			>
 				<div className="mx-auto flex max-w-screen-2xl items-center justify-between">
 					<m.div whileHover={{ scale: 1.05 }}>
 						<Link href="/" onClick={() => setIsNavbarMenuOpen(false)}>
@@ -99,7 +114,7 @@ const NavbarExport = () => {
 						</button>
 					</div>
 				</div>
-			</nav>
+			</m.nav>
 
 			<AnimatePresence>
 				{isNavbarMenuOpen && (
