@@ -1,20 +1,36 @@
 "use client";
 
-import { OpenSansBold, OpenSansRegular } from "@/lib/fonts";
+import { OpenSansBold, OpenSansMedium, OpenSansRegular, OpenSansSemiBold } from "@/lib/fonts";
 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion as m } from "framer-motion";
+import { FiExternalLink } from "react-icons/fi";
 import { RiCloseLine } from "react-icons/ri";
+import Link from "next/link";
 import React from "react";
 
 const CookiesConsent = () => {
-	const [showCookiesConsent, setShowCookiesConsent] = React.useState(true);
+	const [showCookiesConsent, setShowCookiesConsent] = React.useState(false);
 
-	// TODO : Make backend for cookies
+	React.useEffect(() => {
+		const cookieConsent = localStorage.getItem("cookieConsent");
+		if (!cookieConsent) setShowCookiesConsent(true);
+	}, []);
+
+	const handleCookieConsent = (type: "accepted" | "rejected") => {
+		setShowCookiesConsent(false);
+		localStorage.setItem("cookieConsent", type);
+	};
 
 	return (
 		<AnimatePresence>
 			{showCookiesConsent && (
-				<div className="fixed right-0 bottom-4 left-0 z-[80] w-full px-4 lg:left-4 lg:max-w-md lg:px-0">
+				<m.div
+					initial={{ opacity: 0, y: 50 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: 50 }}
+					transition={{ duration: 0.5 }}
+					className="fixed right-0 bottom-4 left-0 z-[80] w-full px-4 lg:left-4 lg:max-w-md lg:px-0"
+				>
 					<div className="rounded-lg border border-[#d1d5dc] bg-[#ffffff] p-4 shadow-2xl">
 						<div className="flex items-center justify-between">
 							<div className="flex items-center space-x-2">
@@ -26,7 +42,7 @@ const CookiesConsent = () => {
 									strokeWidth="2"
 									strokeLinecap="round"
 									strokeLinejoin="round"
-									className="h-7 w-7 text-[#000000]"
+									className="h-5 w-5 text-[#000000] md:h-7 md:w-7"
 								>
 									<path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
 									<path d="M8.5 8.5v.01" />
@@ -36,7 +52,9 @@ const CookiesConsent = () => {
 									<path d="M7 14v.01" />
 								</svg>
 
-								<h1 className={`${OpenSansBold.className} text-start text-xl text-[#000000]`}>
+								<h1
+									className={`${OpenSansBold.className} text-start text-base text-[#000000] md:text-xl`}
+								>
 									Používáme soubory cookies
 								</h1>
 							</div>
@@ -52,10 +70,34 @@ const CookiesConsent = () => {
 							nebo zakázat v menu Nastavení ve Vašem prohlížeči.
 						</p>
 
-						{/* TODO: Add buttons to accept/decline cookies */}
+						<m.div
+							onClick={() => handleCookieConsent("accepted")}
+							whileHover={{ scale: 1.02 }}
+							whileTap={{ scale: 0.9 }}
+							className={`mt-4 w-full cursor-pointer rounded-lg bg-[#000000] px-4 py-3 text-center text-sm ${OpenSansSemiBold.className} text-[#ffffff]`}
+						>
+							Přijmout Cookies
+						</m.div>
+
+						<div className="mt-4 flex w-full items-center justify-between">
+							<button
+								onClick={() => handleCookieConsent("rejected")}
+								className={`cursor-pointer text-start text-sm text-[#4a5565] transition-all duration-300 hover:text-[#000000] ${OpenSansMedium.className}`}
+							>
+								Odmítnout Cookies
+							</button>
+
+							<Link
+								href="/zasady-pouzivani-cookies"
+								className={`flex items-center text-end text-sm text-[#4a5565] transition-all duration-300 hover:text-[#000000] ${OpenSansMedium.className}`}
+							>
+								Více informací <FiExternalLink className="ml-1.5" />
+							</Link>
+						</div>
 					</div>
-				</div>
+				</m.div>
 			)}
+			ß
 		</AnimatePresence>
 	);
 };
