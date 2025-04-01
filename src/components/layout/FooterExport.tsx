@@ -18,10 +18,8 @@ const FooterExport = () => {
 						className="relative"
 					>
 						<div className="flex flex-col items-start gap-3 sm:items-center lg:items-start">
-							<Link href="/" className={`group relative inline-block text-3xl ${OpenSansBold.className}`}>
-								<span className="relative text-[#000000]">Virgixo.com</span>
-
-								<div className="absolute -bottom-1 left-0 h-[2px] w-0 rounded-full bg-[#000000] transition-all duration-300 group-hover:w-full" />
+							<Link href="/" className={`text-3xl text-[#000000] ${OpenSansBold.className}`}>
+								Virgixo.com
 							</Link>
 
 							<p className={`${OpenSansRegular.className} flex items-center text-sm text-[#4a5565]`}>
