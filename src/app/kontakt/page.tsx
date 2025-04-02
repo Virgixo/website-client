@@ -20,8 +20,8 @@ const KontaktPage = () => {
 		fullname: "Alexandr Virgovič",
 		email: "contact@deemdev.xyz",
 		phone: "+420 730 908 998",
-		message:
-			"Popište detailně Váš požadavek co od nás potřebujete, jestli již máte nějaké podklady tak je připojte. Poskytněte nám co nejvíce informací pro rychlejší komunikaci...",
+		//prettier-ignore
+		message: "Popište detailně Váš požadavek co od nás potřebujete, jestli již máte nějaké podklady tak je připojte. Poskytněte nám co nejvíce informací pro rychlejší komunikaci...",
 	};
 
 	//prettier-ignore
@@ -52,6 +52,7 @@ const KontaktPage = () => {
 		setFormErrors(newFormErrors);
 	}
 
+	// TODO : Add input error message under the underline effect
 	return (
 		<div className="flex min-h-screen flex-col items-center justify-center p-4 2xl:p-0">
 			<form className="flex w-full max-w-md flex-col space-y-4" onSubmit={handleFormSubmit}>
@@ -93,8 +94,6 @@ const KontaktPage = () => {
 								<FiAlertCircle className="text-red-500" size={24} />
 							</div>
 						)}
-
-						// TODO : Add input error message under the underline effect
 
 						<motion.div
 							initial={{ scaleX: 0 }}
