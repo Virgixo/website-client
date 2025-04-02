@@ -5,11 +5,13 @@ import { OpenSansBold, OpenSansMedium, OpenSansRegular, OpenSansSemiBold } from 
 import { AnimatePresence, motion as m } from "framer-motion";
 import { FiExternalLink } from "react-icons/fi";
 import { RiCloseLine } from "react-icons/ri";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import React from "react";
 
 const CookiesConsent = () => {
 	const [showCookiesConsent, setShowCookiesConsent] = React.useState(false);
+	const router = useRouter();
 
 	React.useEffect(() => {
 		const cookieConsent = localStorage.getItem("cookieConsent");
@@ -19,6 +21,10 @@ const CookiesConsent = () => {
 	const handleCookieConsent = (type: "accepted" | "rejected") => {
 		setShowCookiesConsent(false);
 		localStorage.setItem("cookieConsent", type);
+
+		if (type === "rejected") {
+			return router.replace("https://www.google.com");
+		}
 	};
 
 	return (
