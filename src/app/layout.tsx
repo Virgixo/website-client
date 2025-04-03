@@ -8,6 +8,7 @@ import { DOMAIN_BASE_URL } from "@/lib/constants";
 import "../../public/styles/globals.css";
 
 import type { Metadata, Viewport } from "next";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
 	metadataBase: new URL(DOMAIN_BASE_URL),
@@ -172,6 +173,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 				className={`${OpenSansLight.className} ${OpenSansRegular.className} ${OpenSansMedium.className} ${OpenSansSemiBold.className} ${OpenSansBold.className} ${OpenSansExtraBold.className} antialiased`}
 			>
 				<TopLoader />
+				<Toaster richColors={true} closeButton={true} visibleToasts={4} theme="light" />
+
 				<NavbarExport />
 				<CookiesConsent />
 				<main>{children}</main>
