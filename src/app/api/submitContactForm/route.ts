@@ -4,12 +4,35 @@ import { blacklistedMails } from "@/utils/blacklistedMails";
 import generateUUID from "@/lib/generateUUID";
 
 import { NextResponse, NextRequest } from "next/server";
+import { createTransport } from "nodemailer";
+import validate from "deep-email-validator";
 import "dotenv/config";
 
 let solves: string[] = [];
 setInterval(() => {
 	solves = [];
 }, 60_000 * 5);
+
+async function validateEmailAddress(email: string) {
+	try {
+		const data = await validate({
+			email: email,
+			validateRegex: false,
+			validateMx: true,
+			validateTypo: false,
+			validateDisposable: false,
+			validateSMTP: true,
+		});
+
+		if (!data?.valid) {
+			return false;
+		} else {
+			return true;
+		}
+	} catch {
+		return false;
+	}
+}
 
 export async function GET(req: NextRequest) {
 	const token = req?.nextUrl?.searchParams?.get("token");
@@ -55,7 +78,31 @@ export async function POST(req: NextRequest) {
 		);
 	}
 
-	// TODO : Add back-end validation for form inputs
+	if (!fullname) {
+		return NextResponse.json({ message: "Vyplňte prosím Vaše jméno a příjmení", success: false }, { status: 400 });
+	} else if (fullname.length < 5) {
+		return NextResponse.json(
+			{ message: "Jméno a příjmení musí mít alespoň 5 znaků", success: false },
+			{ status: 400 },
+		);
+	} else if (fullname.length > 50) {
+		return NextResponse.json(
+			{ message: "Jméno a příjmení nemůže mít více než 50 znaků", success: false },
+			{ status: 400 },
+		);
+	} else if (!/^[a-zA-Zá-žÁ-Ž\s]+$/.test(fullname)) {
+		return NextResponse.json(
+			{ message: "Jméno a příjmení může obsahovat pouze písmena", success: false },
+			{ status: 400 },
+		);
+	} else if (fullname.trim().split(/\s+/).length < 2) {
+		return NextResponse.json(
+			{ message: "Jméno a příjmení musí být odděleno mezerou", success: false },
+			{ status: 400 },
+		);
+	}
+
+	// TODO : Make back-end validation for rest of the inputs
 
 	return NextResponse.json({ message: "Žádost byla úspěšně odeslána!", success: true }, { status: 200 });
 }
