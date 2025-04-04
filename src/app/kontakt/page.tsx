@@ -4,7 +4,6 @@ import { OpenSansBold, OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
 
 import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
 import { RiSendPlane2Line } from "react-icons/ri";
-import { FiAlertCircle } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import React from "react";
@@ -57,10 +56,19 @@ const KontaktPage = () => {
 
 		const newFormErrors: { fullname?: string; email?: string; phone?: string; message?: string } = {};
 
-		// TODO : Add validation for form inputs
 		if (!formData.fullname.trim()) {
 			newFormErrors.fullname = "Jméno a příjmení je povinné pole";
+		} else if (formData.fullname.length < 5) {
+			newFormErrors.fullname = "Jméno a příjmení musí mít alespoň 5 znaků";
+		} else if (formData.fullname.length > 50) {
+			newFormErrors.fullname = "Jméno a příjmení nemůže mít více než 50 znaků";
+		} else if (!/^[a-zA-Zá-žÁ-Ž\s]+$/.test(formData.fullname)) {
+			newFormErrors.fullname = "Jméno a příjmení může obsahovat pouze písmena";
+		} else if (formData.fullname.trim().split(/\s+/).length < 2) {
+			newFormErrors.fullname = "Jméno a příjmení musí být odděleno mezerou";
 		}
+
+		// TODO : Make front-end validation for rest of the inputs
 
 		setFormErrors(newFormErrors);
 
@@ -78,7 +86,7 @@ const KontaktPage = () => {
 
 				setIsDataSubmitting(false);
 
-				if (res?.ok) {
+				if (res.ok) {
 					setFormData(initialFormState);
 					setCanDataSubmit(false);
 
@@ -151,12 +159,6 @@ const KontaktPage = () => {
 								className={`absolute bottom-0 left-0 h-[1px] w-full origin-left ${formErrors[field as keyof typeof formErrors] ? "bg-[#fb2c36]" : "bg-[#000000]"}`}
 							/>
 						</div>
-
-						{formErrors[field as keyof typeof formErrors] && (
-							<div className="absolute top-1/2 right-0 flex -translate-y-1/2 transform items-center">
-								<FiAlertCircle className="text-[#fb2c36]" size={20} />
-							</div>
-						)}
 
 						{formErrors[field as keyof typeof formErrors] && (
 							<motion.p
