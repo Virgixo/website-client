@@ -1,27 +1,33 @@
 "use client";
 
-import { OpenSansBold, OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
+import { OpenSansBold, OpenSansExtraBold, OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
+import { EMAIL_ADDRESS, PHONE_NUMBER } from "@/lib/constants";
+import { blacklistedMails } from "@/utils/blacklistedMails";
 
 import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 import { RiSendPlane2Line } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import React from "react";
+
+import { RiMailSendLine, RiPhoneLine } from "react-icons/ri";
+import Link from "next/link";
 
 const KontaktPage = () => {
 	const initialFormState = { fullname: "", email: "", phone: "", message: "" };
 
 	const fieldLabels: { [key in keyof typeof initialFormState]: string } = {
 		fullname: "Jméno a Příjmení",
-		email: "Emailová Adresa",
+		email: "E-mailová Adresa",
 		phone: "Telefonní Číslo",
 		message: "Zpráva",
 	};
 
 	const fieldPlaceholders: { [key in keyof typeof initialFormState]: string } = {
-		fullname: "Alexandr Virgovič",
-		email: "contact@deemdev.xyz",
-		phone: "+420 730 908 998",
+		fullname: "Franta Novotný",
+		email: EMAIL_ADDRESS,
+		phone: PHONE_NUMBER,
 		//prettier-ignore
 		message: "Popište detailně Váš požadavek co od nás potřebujete, jestli již máte nějaké podklady tak je připojte. Poskytněte nám co nejvíce informací pro rychlejší komunikaci...",
 	};
@@ -57,7 +63,7 @@ const KontaktPage = () => {
 		const newFormErrors: { fullname?: string; email?: string; phone?: string; message?: string } = {};
 
 		if (!formData.fullname.trim()) {
-			newFormErrors.fullname = "Jméno a příjmení je povinné pole";
+			newFormErrors.fullname = "Vyplňte prosím Vaše celé jméno a příjmení";
 		} else if (formData.fullname.length < 5) {
 			newFormErrors.fullname = "Jméno a příjmení musí mít alespoň 5 znaků";
 		} else if (formData.fullname.length > 50) {
@@ -68,7 +74,39 @@ const KontaktPage = () => {
 			newFormErrors.fullname = "Jméno a příjmení musí být odděleno mezerou";
 		}
 
-		// TODO : Make front-end validation for rest of the inputs
+		if (!formData.email.trim()) {
+			newFormErrors.email = "Vyplňte prosím Vaší e-mailovou adresu";
+		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+			newFormErrors.email = "Zadaná e-mailová adresa je neplatná";
+		} else if (formData.email.length > 100) {
+			newFormErrors.email = "E-mailová adresa je přiliš dlouhá";
+		} else if (formData.email.length < 8) {
+			newFormErrors.email = "E-mailová adresa je přiliš krátka";
+		} else if (blacklistedMails.includes(formData.email.split("@")[1])) {
+			newFormErrors.email = "Dočasné e-mailové adresy nejsou povoleny";
+		} else if (formData.email === EMAIL_ADDRESS) {
+			newFormErrors.email = "Tuhle e-mailovou adresu nemůžete použít";
+		}
+
+		const userPhoneNumber = parsePhoneNumberFromString(formData.phone, "CZ");
+
+		if (!formData.phone.trim()) {
+			newFormErrors.phone = "Vyplňte prosím Vaše telefonní číslo";
+		} else if (!userPhoneNumber || !userPhoneNumber.isValid()) {
+			newFormErrors.phone = "Zadejte prosím platné telefonní číslo";
+		} else if (userPhoneNumber.country !== "CZ") {
+			newFormErrors.phone = "Zadejte prosím české telefonní číslo";
+		} else if (userPhoneNumber.nationalNumber.length !== 9) {
+			newFormErrors.phone = "Telefonní číslo musí mít 9 číslic";
+		}
+
+		if (!formData.message.trim()) {
+			newFormErrors.message = "Vyplňte prosím Vaší zprávu";
+		} else if (formData.message.length < 10) {
+			newFormErrors.message = "Zpráva musí mít minimálně 10 znaků";
+		} else if (formData.message.length > 1000) {
+			newFormErrors.message = "Zpráva nemůže být delší než 1000 znaků";
+		}
 
 		setFormErrors(newFormErrors);
 
@@ -86,7 +124,7 @@ const KontaktPage = () => {
 
 				setIsDataSubmitting(false);
 
-				if (res.ok) {
+				if (res?.ok) {
 					setFormData(initialFormState);
 					setCanDataSubmit(false);
 
@@ -107,105 +145,169 @@ const KontaktPage = () => {
 					});
 				}
 			}
-		} catch (err) {
+		} catch {
 			setIsDataSubmitting(false);
 		}
 	}
 
-	// TODO : Finish the page design
 	return (
-		<div className="flex min-h-screen flex-col items-center justify-center p-4 2xl:p-0">
-			<form className="flex w-full max-w-md flex-col space-y-4" onSubmit={handleFormSubmit}>
-				{Object.keys(initialFormState).map((field) => (
-					<div key={field} className="relative w-full">
-						<label
-							htmlFor={field}
-							className={`${OpenSansMedium.className} block text-[0.9rem] text-[#000000]`}
+		<div className="relative flex min-h-screen w-full items-center justify-center p-4 pt-24 2xl:p-0">
+			<div className="flex w-full max-w-7xl flex-col gap-24 md:flex-row">
+				<motion.div
+					initial={{ opacity: 0, y: 30 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.7, ease: "easeOut" }}
+					className="relative flex w-full flex-col justify-start md:w-1/2"
+				>
+					<h2 className={`mb-4 text-start text-4xl text-[#000000] ${OpenSansExtraBold.className}`}>
+						Proměňíme Váš nápad v realitu
+					</h2>
+
+					<p className={`mb-6 max-w-xl text-start text-base text-[#4a5565] ${OpenSansRegular.className}`}>
+						Každý skvělý projekt začíná nápadem. Dejte nám vědět, co chcete vytvořit, a společně ho
+						přetvoříme v realitu – moderní, funkční a připravenou uspět.
+					</p>
+
+					<div className="flex flex-col space-y-8">
+						<Link
+							href={`mailto:${EMAIL_ADDRESS}`}
+							className="flex cursor-pointer items-center space-x-2 transition-transform hover:translate-x-1"
 						>
-							{fieldLabels[field as keyof typeof fieldLabels]} <span className="text-[#fb2c36]">*</span>
-						</label>
+							<RiMailSendLine className="text-[#000000]" size={24} />
 
-						<div className="relative">
-							{field === "message" ? (
-								<textarea
-									name={field}
-									rows={4}
-									className={`${OpenSansRegular.className} block w-full resize-none border-b ${formErrors[field as keyof typeof formErrors] ? "border-[#fb2c36]" : "border-[#e4e4e7]"} bg-transparent p-2 pl-0 text-justify text-sm text-[#18181B] transition-all duration-300 outline-none focus:border-transparent`}
-									placeholder={fieldPlaceholders[field as keyof typeof fieldPlaceholders]}
-									value={formData[field as keyof typeof formData]}
-									onChange={handleFormChange}
-									onFocus={() => setFocusedField(field)}
-									onBlur={() => setFocusedField(null)}
-								/>
-							) : (
-								<input
-									type="text"
-									name={field}
-									className={`${OpenSansRegular.className} block w-full border-b ${formErrors[field as keyof typeof formErrors] ? "border-[#fb2c36]" : "border-[#e4e4e7]"} bg-transparent p-2 pl-0 text-start text-sm text-[#18181B] transition-all duration-300 outline-none focus:border-transparent`}
-									placeholder={fieldPlaceholders[field as keyof typeof fieldPlaceholders]}
-									value={formData[field as keyof typeof formData]}
-									onChange={handleFormChange}
-									onFocus={() => setFocusedField(field)}
-									onBlur={() => setFocusedField(null)}
-								/>
-							)}
+							<span className={`text-base text-[#000000] ${OpenSansMedium.className}`}>
+								{EMAIL_ADDRESS}
+							</span>
+						</Link>
 
-							<motion.div
-								initial={{ scaleX: 0 }}
-								animate={{
-									scaleX: focusedField === field || formData[field as keyof typeof formData] ? 1 : 0,
+						<Link
+							href={`tel:${PHONE_NUMBER}`}
+							className="flex cursor-pointer items-center space-x-2 transition-transform hover:translate-x-1"
+						>
+							<RiPhoneLine className="text-[#000000]" size={24} />
+
+							<span className={`text-base text-[#000000] ${OpenSansMedium.className}`}>
+								{PHONE_NUMBER}
+							</span>
+						</Link>
+					</div>
+				</motion.div>
+
+				<motion.div
+					initial={{ opacity: 0, y: 30 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+					className="relative flex w-full items-center justify-center md:w-1/2"
+				>
+					<form className="flex w-full flex-col space-y-4" onSubmit={handleFormSubmit}>
+						{Object.keys(initialFormState).map((field) => (
+							<div key={field} className="relative w-full">
+								<label
+									htmlFor={field}
+									className={`${OpenSansMedium.className} block text-[0.9rem] text-[#000000]`}
+								>
+									{fieldLabels[field as keyof typeof fieldLabels]}{" "}
+									<span className="text-[#fb2c36]">*</span>
+								</label>
+
+								<div className="relative">
+									{field === "message" ? (
+										<textarea
+											name={field}
+											rows={4}
+											className={`${OpenSansRegular.className} block w-full resize-none border-b ${formErrors[field as keyof typeof formErrors] ? "border-[#fb2c36]" : "border-[#e4e4e7]"} bg-transparent p-2 pl-0 text-justify text-sm text-[#18181B] transition-all duration-300 outline-none focus:border-transparent`}
+											placeholder={fieldPlaceholders[field as keyof typeof fieldPlaceholders]}
+											value={formData[field as keyof typeof formData]}
+											onChange={handleFormChange}
+											autoComplete="off"
+											onFocus={() => setFocusedField(field)}
+											onBlur={() => setFocusedField(null)}
+										/>
+									) : (
+										<input
+											type="text"
+											name={field}
+											className={`${OpenSansRegular.className} block w-full border-b ${formErrors[field as keyof typeof formErrors] ? "border-[#fb2c36]" : "border-[#e4e4e7]"} bg-transparent p-2 pl-0 text-start text-sm text-[#18181B] transition-all duration-300 outline-none focus:border-transparent`}
+											placeholder={fieldPlaceholders[field as keyof typeof fieldPlaceholders]}
+											value={formData[field as keyof typeof formData]}
+											onChange={handleFormChange}
+											autoComplete="off"
+											onFocus={() => setFocusedField(field)}
+											onBlur={() => setFocusedField(null)}
+										/>
+									)}
+
+									<motion.div
+										initial={{ scaleX: 0 }}
+										animate={{
+											scaleX:
+												focusedField === field || formData[field as keyof typeof formData]
+													? 1
+													: 0,
+										}}
+										transition={{ duration: 0.4, ease: "easeInOut" }}
+										className={`absolute bottom-0 left-0 h-[1px] w-full origin-left ${formErrors[field as keyof typeof formErrors] ? "bg-[#fb2c36]" : "bg-[#000000]"}`}
+									/>
+								</div>
+
+								{formErrors[field as keyof typeof formErrors] && (
+									<motion.p
+										initial={{ opacity: 0, y: -5 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -5 }}
+										transition={{ duration: 0.3 }}
+										className={`mt-0.5 ${OpenSansRegular.className} text-[0.8rem] text-[#fb2c36]`}
+									>
+										{formErrors[field as keyof typeof formErrors]}
+									</motion.p>
+								)}
+							</div>
+						))}
+
+						<div>
+							<Turnstile
+								siteKey="0x4AAAAAABDp2j1cSmkuT9qY"
+								id="cf-turnstile-captcha"
+								ref={turnstileRef}
+								options={{
+									theme: "light",
+									language: "cs",
+									size: "normal",
 								}}
-								transition={{ duration: 0.4, ease: "easeInOut" }}
-								className={`absolute bottom-0 left-0 h-[1px] w-full origin-left ${formErrors[field as keyof typeof formErrors] ? "bg-[#fb2c36]" : "bg-[#000000]"}`}
+								onError={() => setCanDataSubmit(false)}
+								onExpire={() => turnstileRef.current?.reset()}
+								onSuccess={handleCloudFlareChallenge}
 							/>
 						</div>
 
-						{formErrors[field as keyof typeof formErrors] && (
-							<motion.p
-								initial={{ opacity: 0, y: -5 }}
-								animate={{ opacity: 1, y: 0 }}
-								exit={{ opacity: 0, y: -5 }}
-								transition={{ duration: 0.3 }}
-								className={`mt-0.5 ${OpenSansRegular.className} text-[0.8rem] text-[#fb2c36]`}
+						<div className="mt-1 flex flex-col gap-4 md:flex-row">
+							<motion.button
+								type="submit"
+								className={`${OpenSansBold.className} flex flex-1 cursor-pointer items-center justify-center rounded-lg bg-[#000000] px-4 py-2 text-base text-[#FFFFFF] disabled:cursor-not-allowed`}
+								whileTap={{ scale: 0.9 }}
+								disabled={isDataSubmitting || !canDataSubmit}
 							>
-								{formErrors[field as keyof typeof formErrors]}
-							</motion.p>
-						)}
-					</div>
-				))}
+								{isDataSubmitting ? (
+									<div className="flex h-7 w-7 animate-spin items-center justify-center rounded-full border-t-2 border-r-2 border-[#ffffff]" />
+								) : (
+									<span className="flex items-center justify-center">
+										Odeslat
+										<RiSendPlane2Line size={20} className="ml-2" aria-hidden="true" />
+									</span>
+								)}
+							</motion.button>
 
-				<div className="mt-4">
-					<Turnstile
-						siteKey="0x4AAAAAABDp2j1cSmkuT9qY"
-						id="cf-turnstile-captcha"
-						ref={turnstileRef}
-						options={{
-							theme: "light",
-							language: "cs",
-							size: "normal",
-						}}
-						onError={() => setCanDataSubmit(false)}
-						onExpire={() => turnstileRef.current?.reset()}
-						onSuccess={handleCloudFlareChallenge}
-					/>
-				</div>
-
-				<motion.button
-					type="submit"
-					className={`${OpenSansBold.className} flex cursor-pointer items-center justify-center rounded-lg bg-[#000000] px-4 py-2 text-base text-[#FFFFFF] disabled:cursor-not-allowed`}
-					whileTap={{ scale: 0.9 }}
-					disabled={isDataSubmitting || !canDataSubmit}
-				>
-					{isDataSubmitting ? (
-						<div className="flex h-7 w-7 animate-spin items-center justify-center rounded-full border-t-2 border-r-2 border-[#ffffff]" />
-					) : (
-						<span className="flex items-center justify-center">
-							Odeslat
-							<RiSendPlane2Line size={20} className="ml-2" aria-hidden="true" />
-						</span>
-					)}
-				</motion.button>
-			</form>
+							<Link
+								href={`tel:${PHONE_NUMBER}`}
+								className={`${OpenSansBold.className} flex flex-1 cursor-pointer items-center justify-center rounded-lg border-2 border-[#000000] bg-[#FFFFFF] px-4 py-2 text-base text-[#000000]`}
+							>
+								<RiPhoneLine size={20} className="mr-2" />
+								Zavolejte nám
+							</Link>
+						</div>
+					</form>
+				</motion.div>
+			</div>
 		</div>
 	);
 };

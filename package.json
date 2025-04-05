@@ -1,6 +1,6 @@
 {
 	"private": true,
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"name": "website-client",
 	"description": "Oficiální webová prezentace našeho projektu – Virgixo.com",
 	"scripts": {
@@ -27,10 +27,10 @@
 		"@types/nodemailer": "^6.4.17",
 		"@types/react": "^19.0.12",
 		"@types/react-dom": "^19.0.4",
-		"deep-email-validator": "^0.1.21",
 		"dotenv": "^16.4.7",
 		"eslint": "^9.23.0",
 		"eslint-config-next": "^15.2.4",
+		"libphonenumber-js": "^1.12.6",
 		"nodemailer": "^6.10.0",
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",

@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 		//prettier-ignore
 		description: "Specializujeme se na tvorbu moderních, uživatelsky přívětivých a kvalitních webů, které pomáhají firmám a jednotlivcům dosáhnout jejich cílů. Objevte, jak můžeme přetvořit vaše nápady do reality a posunout váš online projekt na vyšší úroveň!",
 		type: "website",
-		locale: "cs_CZ",
+		locale: "cs",
 		images: [
 			{
 				url: `${DOMAIN_BASE_URL}/assets/Logo-With-Background.png`,
@@ -168,7 +168,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="cs_CZ" suppressHydrationWarning={true}>
+		<html lang="cs" suppressHydrationWarning={true}>
 			<body
 				className={`${OpenSansLight.className} ${OpenSansRegular.className} ${OpenSansMedium.className} ${OpenSansSemiBold.className} ${OpenSansBold.className} ${OpenSansExtraBold.className} antialiased`}
 			>
