@@ -4,15 +4,15 @@ import { OpenSansBold, OpenSansExtraBold, OpenSansMedium, OpenSansRegular } from
 import { EMAIL_ADDRESS, PHONE_NUMBER } from "@/lib/constants";
 import { blacklistedMails } from "@/utils/blacklistedMails";
 
+import { RiSendPlane2Line, RiTimeLine, RiUser2Line, RiMailSendLine, RiPhoneLine } from "react-icons/ri";
 import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
-import { RiSendPlane2Line } from "react-icons/ri";
+import { MdOutlineWorkOutline } from "react-icons/md";
+import { RxLightningBolt } from "react-icons/rx";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import React from "react";
-
-import { RiMailSendLine, RiPhoneLine } from "react-icons/ri";
 import Link from "next/link";
+import React from "react";
 
 const KontaktPage = () => {
 	const initialFormState = { fullname: "", email: "", phone: "", message: "" };
@@ -152,12 +152,12 @@ const KontaktPage = () => {
 
 	return (
 		<div className="relative flex min-h-screen w-full items-center justify-center p-4 pt-24 2xl:p-0">
-			<div className="flex w-full max-w-7xl flex-col gap-24 md:flex-row">
+			<div className="flex w-full max-w-7xl flex-col gap-24 lg:flex-row">
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.7, ease: "easeOut" }}
-					className="relative flex w-full flex-col justify-start md:w-1/2"
+					className="relative flex w-full flex-col justify-start lg:w-1/2"
 				>
 					<h2 className={`mb-4 text-start text-4xl text-[#000000] ${OpenSansExtraBold.className}`}>
 						Proměňíme Váš nápad v realitu
@@ -168,7 +168,7 @@ const KontaktPage = () => {
 						přetvoříme v realitu – moderní, funkční a připravenou uspět.
 					</p>
 
-					<div className="flex flex-col space-y-8">
+					<div className="flex flex-col space-y-6 lg:flex-row lg:gap-10 lg:space-y-0">
 						<Link
 							href={`mailto:${EMAIL_ADDRESS}`}
 							className="flex cursor-pointer items-center space-x-2 transition-transform hover:translate-x-1"
@@ -191,13 +191,64 @@ const KontaktPage = () => {
 							</span>
 						</Link>
 					</div>
+
+					<div className="mt-10 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 2xl:mt-auto">
+						{[
+							{
+								icon: <RiTimeLine size={20} className="text-[#000000]" />,
+								title: "Reakční Doba",
+								desc: "Rychlá odpověď do 60 minut",
+							},
+							{
+								icon: <MdOutlineWorkOutline size={20} className="text-[#000000]" />,
+								title: "Pracovní Doba",
+								desc: "Po-Ne: 9:00-23:00",
+							},
+							{
+								icon: <RxLightningBolt size={20} className="text-[#000000]" />,
+								title: "Rychlá Komunikace",
+								desc: "Komunikace bez zbytečných průtahů",
+							},
+							{
+								icon: <RiUser2Line size={20} className="text-[#000000]" />,
+								title: "Osobní Přístup",
+								desc: "Řešení na míru Vašim potřebám",
+							},
+						].map((item, index) => (
+							<motion.div
+								key={index}
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
+								whileHover={{
+									scale: 1.03,
+									transition: { type: "spring", stiffness: 300 },
+								}}
+								className="flex items-center space-x-4 rounded-lg border border-[#e4e4e7] bg-[#FFFFFF] p-4 shadow-sm"
+							>
+								<div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f9fafb]">
+									{item.icon}
+								</div>
+
+								<div className="flex flex-col">
+									<h3 className={`text-start text-sm text-[#000000] ${OpenSansBold.className}`}>
+										{item.title}
+									</h3>
+
+									<p className={`text-start text-xs text-[#4a5565] ${OpenSansRegular.className}`}>
+										{item.desc}
+									</p>
+								</div>
+							</motion.div>
+						))}
+					</div>
 				</motion.div>
 
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
-					className="relative flex w-full items-center justify-center md:w-1/2"
+					className="relative flex w-full items-center justify-center lg:w-1/2"
 				>
 					<form className="flex w-full flex-col space-y-4" onSubmit={handleFormSubmit}>
 						{Object.keys(initialFormState).map((field) => (
@@ -280,7 +331,7 @@ const KontaktPage = () => {
 							/>
 						</div>
 
-						<div className="mt-1 flex flex-col gap-4 md:flex-row">
+						<div className="mt-1 flex flex-col gap-4 lg:flex-row">
 							<motion.button
 								type="submit"
 								className={`${OpenSansBold.className} flex flex-1 cursor-pointer items-center justify-center rounded-lg bg-[#000000] px-4 py-2 text-base text-[#FFFFFF] disabled:cursor-not-allowed`}
