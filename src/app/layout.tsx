@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 		//prettier-ignore
 		description: "Specializujeme se na tvorbu moderních, uživatelsky přívětivých a kvalitních webů, které pomáhají firmám a jednotlivcům dosáhnout jejich cílů. Objevte, jak můžeme přetvořit vaše nápady do reality a posunout váš online projekt na vyšší úroveň!",
 		type: "website",
-		locale: "cs",
+		locale: "cs_CZ",
 		images: [
 			{
 				url: `${DOMAIN_BASE_URL}/assets/Logo-With-Background.png`,
@@ -83,55 +83,55 @@ export const metadata: Metadata = {
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "57x57",
-			url: "/assets/favicons/apple-touch-icon-57x57.png",
+			url: "/assets/favicons/apple-icon-57x57.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "60x60",
-			url: "/assets/favicons/apple-touch-icon-60x60.png",
+			url: "/assets/favicons/apple-icon-60x60.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "72x72",
-			url: "/assets/favicons/apple-touch-icon-72x72.png",
+			url: "/assets/favicons/apple-icon-72x72.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "76x76",
-			url: "/assets/favicons/apple-touch-icon-76x76.png",
+			url: "/assets/favicons/apple-icon-76x76.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "114x114",
-			url: "/assets/favicons/apple-touch-icon-114x114.png",
+			url: "/assets/favicons/apple-icon-114x114.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "120x120",
-			url: "/assets/favicons/apple-touch-icon-120x120.png",
+			url: "/assets/favicons/apple-icon-120x120.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "144x144",
-			url: "/assets/favicons/apple-touch-icon-144x144.png",
+			url: "/assets/favicons/apple-icon-144x144.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "152x152",
-			url: "/assets/favicons/apple-touch-icon-152x152.png",
+			url: "/assets/favicons/apple-icon-152x152.png",
 		},
 		{
 			rel: "apple-touch-icon",
 			type: "images/png",
 			sizes: "180x180",
-			url: "/assets/favicons/apple-touch-icon-180x180.png",
+			url: "/assets/favicons/apple-icon-180x180.png",
 		},
 		{
 			rel: "icon",
@@ -168,10 +168,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="cs" suppressHydrationWarning={true}>
-			<body
-				className={`${OpenSansLight.className} ${OpenSansRegular.className} ${OpenSansMedium.className} ${OpenSansSemiBold.className} ${OpenSansBold.className} ${OpenSansExtraBold.className} antialiased`}
-			>
+		<html lang="cs_CZ" suppressHydrationWarning={true}>
+			{/* prettier-ignore */}
+			<body className={`${OpenSansLight.className} ${OpenSansRegular.className} ${OpenSansMedium.className} ${OpenSansSemiBold.className} ${OpenSansBold.className} ${OpenSansExtraBold.className} antialiased`}>
 				<TopLoader />
 				<Toaster richColors={true} closeButton={true} visibleToasts={4} theme="light" />
 

@@ -2,24 +2,31 @@
 
 import { OpenSansMedium, OpenSansSemiBold } from "@/lib/fonts";
 
-import { motion as m, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion as m, AnimatePresence } from "framer-motion";
 import { RiMailSendLine } from "react-icons/ri";
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-const NavbarExport = () => {
+interface NavbarLink {
+	href: string;
+	label: string;
+}
+
+const NAVBAR_LINKS: NavbarLink[] = [
+	{ href: "/informace", label: "O nás" },
+	{ href: "/sluzby", label: "Služby" },
+	{ href: "/projekty", label: "Projekty" },
+];
+
+const DESKTOP_NAVBAR_LINK_CLASSES = `${OpenSansMedium.className} relative text-base text-[#000000] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-[#000000] after:transition-all after:duration-300 hover:after:w-full`;
+
+interface NavbarExportProps {
+	className?: string;
+}
+
+const NavbarExport: React.FC<NavbarExportProps> = ({ className }) => {
 	const [isNavbarMenuOpen, setIsNavbarMenuOpen] = React.useState(false);
-	const [isNavbarVisible, setIsNavbarVisible] = React.useState(true);
-	const [lastScrollY, setLastScrollY] = React.useState(0);
-	const { scrollY } = useScroll();
-
-	useMotionValueEvent(scrollY, "change", (latest) => {
-		const currentScrollY = latest;
-
-		setIsNavbarVisible(currentScrollY < lastScrollY || currentScrollY < 100);
-		setLastScrollY(currentScrollY);
-	});
 
 	React.useEffect(() => {
 		const handleResizeScreen = () => {
@@ -37,21 +44,13 @@ const NavbarExport = () => {
 		};
 	}, [isNavbarMenuOpen]);
 
-	const navbarLinks = [
-		{ href: "/informace", label: "O nás" },
-		{ href: "/sluzby", label: "Služby" },
-		{ href: "/projekty", label: "Projekty" },
-	];
-
-	const desktopNavbarLinkClasses = `${OpenSansMedium.className} relative text-base text-[#000000] after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-0 after:bg-[#000000] after:transition-all after:duration-300 hover:after:w-full`;
-
 	return (
 		<>
-			<m.nav 
+			<m.nav
 				initial={{ y: 0 }}
-				animate={{ y: isNavbarVisible ? 0 : -100 }}
+				animate={{ y: 0 }}
 				transition={{ duration: 0.3 }}
-				className="fixed top-0 right-0 left-0 z-[60] mx-auto w-full bg-[#ffffff] px-4 py-4"
+				className={`fixed top-0 right-0 left-0 z-[60] mx-auto w-full bg-transparent px-4 py-4 backdrop-blur-lg`}
 			>
 				<div className="mx-auto flex max-w-screen-2xl items-center justify-between">
 					<m.div whileHover={{ scale: 1.05 }}>
@@ -63,14 +62,15 @@ const NavbarExport = () => {
 								height={34}
 								priority={true}
 								draggable={false}
+								loading="eager"
 							/>
 						</Link>
 					</m.div>
 
 					<div className="flex items-center space-x-10">
 						<div className="hidden items-center space-x-10 md:flex">
-							{navbarLinks.map(({ href, label }) => (
-								<Link key={href} href={href} className={desktopNavbarLinkClasses}>
+							{NAVBAR_LINKS.map(({ href, label }) => (
+								<Link key={href} href={href} className={DESKTOP_NAVBAR_LINK_CLASSES}>
 									{label}
 								</Link>
 							))}
@@ -127,7 +127,7 @@ const NavbarExport = () => {
 					>
 						<div className="relative z-10 flex h-full flex-col">
 							<div className="flex flex-col space-y-10">
-								{navbarLinks.map((item, index) => (
+								{NAVBAR_LINKS.map((item, index) => (
 									<m.div
 										key={item.href}
 										initial={{ x: 50, opacity: 0 }}
@@ -144,7 +144,7 @@ const NavbarExport = () => {
 												initial={{ width: "0%" }}
 												animate={{ width: "15%" }}
 												transition={{ delay: 0.3 + 0.1 * index, duration: 0.4 }}
-												className="mr-6 h-[2px] bg-[#000000] rounded-full"
+												className="mr-6 h-[2px] rounded-full bg-[#000000]"
 											/>
 
 											<span
