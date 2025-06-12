@@ -1,8 +1,8 @@
 "use client";
 
 import { OpenSansBold, OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
+import Image from "next/image";
 
-import { RiCopyrightLine } from "react-icons/ri";
 import { motion as m } from "framer-motion";
 import Link from "next/link";
 
@@ -33,16 +33,21 @@ const FooterExport: React.FC = () => {
 					<m.div {...FADE_IN_ANIMATION} className="relative">
 						<div className="flex flex-col items-start gap-3 sm:items-center lg:items-start">
 							<Link
-								href="/"
-								className={`text-3xl text-[#000000] ${OpenSansBold.className}`}
-								aria-label="Domů"
+								href={"/"}
+								className="cursor-pointer opacity-80 transition-opacity duration-300 hover:opacity-100"
 							>
-								Virgixo.com
+								<Image
+									src="/assets/created-by-virgixo.svg"
+									alt="Created by Virgixo™"
+									width={250}
+									height={40}
+									priority={true}
+									draggable={false}
+								/>
 							</Link>
 
 							<p className={`${OpenSansRegular.className} flex items-center text-sm text-[#4a5565]`}>
-								<RiCopyrightLine className="mr-1.5" aria-hidden="true" />
-								<span>{currentYear} Virgixo. All rights reserved.</span>
+								<span>Virgixo™ {currentYear} – All rights are reserved.</span>
 							</p>
 						</div>
 					</m.div>

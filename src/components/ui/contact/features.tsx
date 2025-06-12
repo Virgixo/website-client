@@ -43,14 +43,16 @@ export const ContactFeatures = () => {
 						scale: 1.02,
 						transition: { type: "spring", stiffness: 400, damping: 10 },
 					}}
-					className="flex items-center space-x-4 rounded-xl border border-[#e4e4e7] bg-[#FFFFFF] p-5 shadow-md hover:shadow-lg transition-all duration-300"
+					className="flex items-center space-x-4 rounded-xl border border-[#e4e4e7] bg-[#FFFFFF] p-4 shadow-md transition-all duration-300 hover:shadow-lg"
 				>
 					<div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">
 						<div className="text-[#2563eb]">{item.icon}</div>
 					</div>
 
 					<div className="flex flex-col space-y-1">
-						<h3 className={`text-start text-base text-[#000000] ${OpenSansBold.className}`}>{item.title}</h3>
+						<h3 className={`text-start text-base text-[#000000] ${OpenSansBold.className}`}>
+							{item.title}
+						</h3>
 
 						<p className={`text-start text-sm text-[#4a5565] ${OpenSansRegular.className}`}>{item.desc}</p>
 					</div>

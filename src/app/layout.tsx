@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 	title: "Transformujeme vaše vize do reality – Virgixo.com",
 	//prettier-ignore
 	description: "Specializujeme se na tvorbu moderních, uživatelsky přívětivých a kvalitních webů, které pomáhají firmám a jednotlivcům dosáhnout jejich cílů. Objevte, jak můžeme přetvořit vaše nápady do reality a posunout váš online projekt na vyšší úroveň!",
-	applicationName: "Virgixo",
+	applicationName: "Virgixo™",
 	keywords: [
 		"vývoj webových stránek",
 		"tvorba webových stránek",

@@ -27,7 +27,7 @@ const NotFoundExport = () => {
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						transition={{ delay: 0.2, duration: 0.5 }}
-						className={`mt-4 max-w-2xl text-justify text-sm md:text-base text-[#4a5565] sm:text-center xl:text-justify ${OpenSansRegular.className}`}
+						className={`mt-4 max-w-2xl text-justify text-sm text-[#4a5565] sm:text-center md:text-base xl:text-justify ${OpenSansRegular.className}`}
 					>
 						Vypadá to že stránka kterou hledáte, možná neexistuje nebo byla přesunuta. Ale nezoufejte můžete
 						se vždy vrátit domů nebo nám napsat, pokud potřebujete pomoct.

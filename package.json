@@ -1,10 +1,10 @@
 {
 	"private": true,
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"name": "website-client",
 	"description": "Oficiální webová prezentace našeho projektu – Virgixo.com",
 	"scripts": {
-		"dev": "next dev -p 3000",
+		"dev": "next dev -p 3000 --turbopack",
 		"build": "next build",
 		"start": "next start -p 8752",
 		"lint": "next lint",
@@ -13,7 +13,7 @@
 		"format:write": "prettier --write ."
 	},
 	"dependencies": {
-		"framer-motion": "^12.16.0",
+		"framer-motion": "^12.17.0",
 		"next": "^15.3.3",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
@@ -22,10 +22,10 @@
 	"devDependencies": {
 		"@eslint/eslintrc": "^3.3.1",
 		"@marsidev/react-turnstile": "^1.1.0",
-		"@tailwindcss/postcss": "^4.1.8",
+		"@tailwindcss/postcss": "^4.1.10",
 		"@types/node": "^20.19.0",
 		"@types/nodemailer": "^6.4.17",
-		"@types/react": "^19.1.6",
+		"@types/react": "^19.1.8",
 		"@types/react-dom": "^19.1.6",
 		"dotenv": "^16.5.0",
 		"eslint": "^9.28.0",
@@ -35,7 +35,7 @@
 		"prettier": "^3.5.3",
 		"prettier-plugin-tailwindcss": "^0.6.12",
 		"sonner": "^2.0.5",
-		"tailwindcss": "^4.1.8",
+		"tailwindcss": "^4.1.10",
 		"typescript": "^5.8.3"
 	},
 	"author": {

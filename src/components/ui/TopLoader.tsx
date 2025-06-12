@@ -11,6 +11,7 @@ interface TopLoaderProps {
 const TopLoader: React.FC<TopLoaderProps> = ({ color = "#000000", height = "3px" }) => {
 	const intervalRef = React.useRef<NodeJS.Timeout | undefined>(undefined);
 	const timeoutRef = React.useRef<NodeJS.Timeout | undefined>(undefined);
+
 	const [loading, setLoading] = React.useState(false);
 	const [progress, setProgress] = React.useState(0);
 	const searchParams = useSearchParams();
