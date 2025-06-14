@@ -50,7 +50,7 @@ const NavbarExport: React.FC<NavbarExportProps> = ({ className }) => {
 				initial={{ y: 0 }}
 				animate={{ y: 0 }}
 				transition={{ duration: 0.3 }}
-				className={`fixed top-0 right-0 left-0 z-[60] mx-auto w-full bg-transparent px-4 py-4 backdrop-blur-sm`}
+				className={`fixed top-0 right-0 left-0 z-[60] mx-auto w-full bg-[#FFFFFF] px-4 py-4 shadow-lg`}
 			>
 				<div className="mx-auto flex max-w-screen-2xl items-center justify-between">
 					<m.div whileHover={{ scale: 1.05 }}>

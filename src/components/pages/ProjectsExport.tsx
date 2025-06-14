@@ -92,7 +92,7 @@ export default function ProjectsExport() {
 
 	//prettier-ignore
 	const filteredProjects = activeCategory === "Vše" ? [...projects.filter((p) => p.category === "Tvorba Webu"), ...projects.filter((p) => p.category === "Video Produkce")] : projects.filter((project) => project.category === activeCategory);
-	const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 3);
+	const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6);
 
 	const handleCategoryChange = (category: string) => {
 		setActiveCategory(category);
@@ -137,7 +137,7 @@ export default function ProjectsExport() {
 			opacity: 1,
 			scale: 1,
 			transition: {
-				type: "spring",
+				type: "spring" as const,
 				damping: 12,
 				stiffness: 100,
 			},
@@ -186,7 +186,7 @@ export default function ProjectsExport() {
 						))}
 					</div>
 
-					{filteredProjects.length > 3 && (
+					{filteredProjects.length > 6 && (
 						<m.button
 							onClick={handleShowAllToggle}
 							className={`hidden cursor-pointer items-center gap-1 rounded-lg px-4 py-2 text-sm md:flex ${OpenSansMedium.className} bg-[#000000] text-[#FFFFFF] transition-all duration-300`}
@@ -220,17 +220,21 @@ export default function ProjectsExport() {
 				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 					{displayedProjects.map((project, index) => (
 						<m.div
-							key={project.title}
+							key={project.youtubeId || project.title || index}
 							variants={itemVariants}
 							whileHover={{
 								y: -4,
 								transition: {
-									type: "spring",
+									type: "spring" as const,
 									damping: 15,
 									stiffness: 300,
 								},
 							}}
-							className="overflow-hidden rounded-lg border border-[#e5e7eb] bg-[#FFFFFF] shadow-md"
+							className={
+								project.category === "Video Produkce"
+									? ""
+									: "overflow-hidden rounded-lg border border-[#e5e7eb] bg-[#FFFFFF] shadow-md"
+							}
 						>
 							{project.category === "Video Produkce" && project.youtubeId ? (
 								<div className="group relative h-60 w-full">
@@ -244,26 +248,31 @@ export default function ProjectsExport() {
 									/>
 								</div>
 							) : (
-								<ImageSlider images={project?.images || []} title={project.title} />
+								<>
+									<ImageSlider
+										images={project?.images || []}
+										title={project?.title || "Unknown Title"}
+									/>
+
+									<div className="p-4">
+										<h3 className={`mb-2 text-2xl ${OpenSansMedium.className} text-[#000000]`}>
+											{project?.title}
+										</h3>
+
+										<p
+											className={`text-justify text-sm ${OpenSansRegular.className} leading-relaxed text-[#4a5565]`}
+										>
+											{project?.description}
+										</p>
+									</div>
+								</>
 							)}
-
-							<div className="p-4">
-								<h3 className={`mb-2 text-2xl ${OpenSansMedium.className} text-[#000000]`}>
-									{project.title}
-								</h3>
-
-								<p
-									className={`text-justify text-sm ${OpenSansRegular.className} leading-relaxed text-[#4a5565]`}
-								>
-									{project.description}
-								</p>
-							</div>
 						</m.div>
 					))}
 				</div>
 			</m.div>
 
-			{filteredProjects.length > 3 && (
+			{filteredProjects.length > 6 && (
 				<div className="mb-16 flex w-full justify-end md:hidden">
 					<m.button
 						onClick={handleShowAllToggle}

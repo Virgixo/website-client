@@ -1,9 +1,9 @@
 "use client";
 
-import { OpenSansBold, OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
-import Image from "next/image";
+import { OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
 
 import { motion as m } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 interface FooterLink {

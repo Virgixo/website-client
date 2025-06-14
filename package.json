@@ -1,6 +1,6 @@
 {
 	"private": true,
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"name": "website-client",
 	"description": "Oficiální webová prezentace našeho projektu – Virgixo.com",
 	"scripts": {
@@ -13,7 +13,7 @@
 		"format:write": "prettier --write ."
 	},
 	"dependencies": {
-		"framer-motion": "^12.17.0",
+		"framer-motion": "^12.18.1",
 		"next": "^15.3.3",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
@@ -28,7 +28,7 @@
 		"@types/react": "^19.1.8",
 		"@types/react-dom": "^19.1.6",
 		"dotenv": "^16.5.0",
-		"eslint": "^9.28.0",
+		"eslint": "^9.29.0",
 		"eslint-config-next": "^15.3.3",
 		"libphonenumber-js": "^1.12.9",
 		"nodemailer": "^6.10.1",
