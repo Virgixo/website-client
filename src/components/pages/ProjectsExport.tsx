@@ -1,7 +1,7 @@
 "use client";
 
 import { OpenSansExtraBold, OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
-import { projects } from "@/utils/projects";
+import { projects } from "@/utils/projectData";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useSearchParams, useRouter } from "next/navigation";
