@@ -57,7 +57,7 @@ const FooterExport: React.FC = () => {
 						transition={{ duration: 0.6, delay: 0.2 }}
 						className="flex flex-col items-start space-y-4 sm:flex-row sm:space-y-0 sm:space-x-10"
 					>
-						{FOOTER_LINKS.map((link, index) => (
+						{FOOTER_LINKS.map((link) => (
 							<m.div
 								key={link.href}
 								initial={{ opacity: 0.8, scale: 1 }}

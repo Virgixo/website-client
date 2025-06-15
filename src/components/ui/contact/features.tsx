@@ -39,10 +39,6 @@ export const ContactFeatures = () => {
 					initial={{ opacity: 0, y: 10 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
-					whileHover={{
-						scale: 1.02,
-						transition: { type: "spring", stiffness: 400, damping: 10 },
-					}}
 					className="flex items-center space-x-4 rounded-xl border border-[#e4e4e7] bg-[#FFFFFF] p-4 shadow-md transition-all duration-300 hover:shadow-lg"
 				>
 					<div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#f9fafb] to-[#f3f4f6]">

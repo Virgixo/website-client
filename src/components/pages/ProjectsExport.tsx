@@ -14,11 +14,11 @@ const ImageSlider = ({ images, title }: { images: string[]; title: string }) => 
 	const [currentIndex, setCurrentIndex] = React.useState(0);
 
 	const nextSlide = () => {
-		setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+		setCurrentIndex((prevIndex) => (prevIndex + 1) % images?.length);
 	};
 
 	const prevSlide = () => {
-		setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+		setCurrentIndex((prevIndex) => (prevIndex - 1 + images?.length) % images?.length);
 	};
 
 	return (
@@ -28,13 +28,12 @@ const ImageSlider = ({ images, title }: { images: string[]; title: string }) => 
 				alt={title}
 				fill={true}
 				priority={true}
-				quality={100}
 				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 				draggable={false}
-				className="object-cover transition-opacity duration-300"
+				className="object-cover"
 			/>
 
-			{images.length > 1 && (
+			{images?.length > 1 && (
 				<>
 					<button
 						onClick={prevSlide}
@@ -86,7 +85,7 @@ export default function ProjectsExport() {
 
 			params.set("kategorie", activeCategory);
 			params.set("zobrazitVse", showAll.toString());
-			router.replace(`/projekty?${params.toString()}`);
+			router.replace(`/projekty?${params?.toString()}`);
 		}
 	}, [isValidCategory, isValidShowAll, activeCategory, showAll, router]);
 
@@ -186,7 +185,7 @@ export default function ProjectsExport() {
 						))}
 					</div>
 
-					{filteredProjects.length > 6 && (
+					{filteredProjects?.length > 6 && (
 						<m.button
 							onClick={handleShowAllToggle}
 							className={`hidden cursor-pointer items-center gap-1 rounded-lg px-4 py-2 text-sm md:flex ${OpenSansMedium.className} bg-[#000000] text-[#FFFFFF] transition-all duration-300`}
@@ -215,12 +214,12 @@ export default function ProjectsExport() {
 				initial="hidden"
 				animate="visible"
 				key={activeCategory}
-				className="container mx-auto mb-8 pt-6"
+				className="container mx-auto mb-4 pt-6 lg:mb-20"
 			>
-				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{displayedProjects.map((project, index) => (
 						<m.div
-							key={project.youtubeId || project.title || index}
+							key={project?.youtubeId || project?.title || index}
 							variants={itemVariants}
 							whileHover={{
 								y: -4,
@@ -231,13 +230,13 @@ export default function ProjectsExport() {
 								},
 							}}
 							className={
-								project.category === "Video Produkce"
+								project?.category === "Video Produkce"
 									? ""
-									: "overflow-hidden rounded-lg border border-[#e5e7eb] bg-[#FFFFFF] shadow-md"
+									: "overflow-hidden rounded-lg border border-[#e5e7eb] bg-[#FFFFFF] shadow-sm"
 							}
 						>
 							{project.category === "Video Produkce" && project.youtubeId ? (
-								<div className="group relative h-60 w-full">
+								<div className="group relative h-60 w-full overflow-hidden rounded-lg">
 									<iframe
 										width="100%"
 										height="100%"
@@ -249,16 +248,27 @@ export default function ProjectsExport() {
 								</div>
 							) : (
 								<>
+									{project.category === "Tvorba Webu" && (
+										<div className="p-3">
+											<div className="flex items-center justify-between">
+												<h3 className={`text-xl ${OpenSansMedium.className} text-[#000000]`}>
+													{project?.title}
+												</h3>
+
+												<span className={`text-sm ${OpenSansRegular.className} text-[#4a5565]`}>
+													{project?.createdAt &&
+														new Date(project.createdAt).toLocaleDateString("cs-CZ")}
+												</span>
+											</div>
+										</div>
+									)}
+
 									<ImageSlider
 										images={project?.images || []}
 										title={project?.title || "Unknown Title"}
 									/>
 
-									<div className="p-4">
-										<h3 className={`mb-2 text-2xl ${OpenSansMedium.className} text-[#000000]`}>
-											{project?.title}
-										</h3>
-
+									<div className="p-3">
 										<p
 											className={`text-justify text-sm ${OpenSansRegular.className} leading-relaxed text-[#4a5565]`}
 										>
@@ -272,11 +282,11 @@ export default function ProjectsExport() {
 				</div>
 			</m.div>
 
-			{filteredProjects.length > 6 && (
+			{filteredProjects?.length > 6 && (
 				<div className="mb-16 flex w-full justify-end md:hidden">
 					<m.button
 						onClick={handleShowAllToggle}
-						className={`inline-flex cursor-pointer items-center gap-1 rounded-lg px-4 py-2 text-sm ${OpenSansMedium.className} bg-[#000000] text-[#FFFFFF] transition-all duration-300`}
+						className={`inline-flex cursor-pointer items-center gap-1 rounded-lg px-4 py-2 text-sm ${OpenSansMedium.className} bg-[#000000] text-[#FFFFFF]`}
 					>
 						<span>{showAll ? "Méně z této kategorie" : "Více z této kategorie"}</span>
 
