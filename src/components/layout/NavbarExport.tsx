@@ -15,7 +15,7 @@ interface NavbarLink {
 
 const NAVBAR_LINKS: NavbarLink[] = [
 	{ href: "/informace", label: "O nás" },
-	{ href: "/sluzby", label: "Služby" },
+	{ href: "/cenik", label: "Ceník" },
 	{ href: "/projekty", label: "Projekty" },
 ];
 

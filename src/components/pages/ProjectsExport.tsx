@@ -22,15 +22,14 @@ const ImageSlider = ({ images, title }: { images: string[]; title: string }) => 
 	};
 
 	return (
-		<div className="group relative h-60 w-full">
+		<div className="group relative h-60 w-full cursor-pointer">
 			<Image
 				src={images[currentIndex]}
 				alt={title}
 				fill={true}
 				priority={true}
-				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 				draggable={false}
-				className="object-cover"
+				className="rounded-t-xl object-cover"
 			/>
 
 			{images?.length > 1 && (
@@ -169,7 +168,7 @@ export default function ProjectsExport() {
 					transition={{ duration: 0.5 }}
 					className="mt-14 flex flex-col items-center gap-4 md:flex-row md:justify-between md:gap-0"
 				>
-					<div className="flex flex-row flex-wrap gap-3">
+					<div className="flex flex-row flex-wrap gap-2 md:gap-5">
 						{categories.map((category) => (
 							<button
 								key={category}
@@ -216,7 +215,7 @@ export default function ProjectsExport() {
 				key={activeCategory}
 				className="container mx-auto mb-4 pt-6 lg:mb-20"
 			>
-				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 					{displayedProjects.map((project, index) => (
 						<m.div
 							key={project?.youtubeId || project?.title || index}
@@ -229,11 +228,7 @@ export default function ProjectsExport() {
 									stiffness: 300,
 								},
 							}}
-							className={
-								project?.category === "Video Produkce"
-									? ""
-									: "overflow-hidden rounded-lg border border-[#e5e7eb] bg-[#FFFFFF] shadow-sm"
-							}
+							className={project?.category === "Video Produkce" ? "" : "overflow-hidden"}
 						>
 							{project.category === "Video Produkce" && project.youtubeId ? (
 								<div className="group relative h-60 w-full overflow-hidden rounded-lg">
@@ -249,32 +244,32 @@ export default function ProjectsExport() {
 							) : (
 								<>
 									{project.category === "Tvorba Webu" && (
-										<div className="p-3">
-											<div className="flex items-center justify-between">
-												<h3 className={`text-xl ${OpenSansMedium.className} text-[#000000]`}>
+										<div>
+											<ImageSlider
+												images={project?.images || []}
+												title={project?.title || "Unknown Title"}
+											/>
+
+											<div className="flex items-center justify-between pt-2 pb-3">
+												<h3 className={`text-2xl ${OpenSansMedium.className} text-[#000000]`}>
 													{project?.title}
 												</h3>
 
-												<span className={`text-sm ${OpenSansRegular.className} text-[#4a5565]`}>
+												<span
+													className={`text-base ${OpenSansRegular.className} text-[#4a5565]`}
+												>
 													{project?.createdAt &&
 														new Date(project.createdAt).toLocaleDateString("cs-CZ")}
 												</span>
 											</div>
+
+											<p
+												className={`text-justify text-sm ${OpenSansRegular.className} leading-relaxed text-[#4a5565]`}
+											>
+												{project?.description}
+											</p>
 										</div>
 									)}
-
-									<ImageSlider
-										images={project?.images || []}
-										title={project?.title || "Unknown Title"}
-									/>
-
-									<div className="p-3">
-										<p
-											className={`text-justify text-sm ${OpenSansRegular.className} leading-relaxed text-[#4a5565]`}
-										>
-											{project?.description}
-										</p>
-									</div>
 								</>
 							)}
 						</m.div>

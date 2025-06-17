@@ -10,7 +10,7 @@ import React from "react";
 const ContactExport = () => {
 	return (
 		<div className="relative flex min-h-screen w-full items-center justify-center p-4 pt-28 pb-24 2xl:p-0">
-			<div className="container flex flex-col gap-24 lg:flex-row">
+			<div className="container flex flex-col gap-14 lg:flex-row">
 				<motion.div
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}

@@ -9,6 +9,7 @@ export interface Project {
 
 //prettier-ignore
 export const projects: Project[] = [
+	//! -------------------- TVORBA WEBU -------------------- //
 	{
 		title: "Voxie",
 		description: "Voxie Music je hudební Discord bot, pro kterého jsme navrhli a vyvinuli kompletní webové rozhraní včetně integrace platebního systému Stripe pro správu předplatného. Cílem bylo vytvořit moderní a uživatelsky přívětivý web, který zjednoduší přístup ke službě a podpoří její monetizaci.",
@@ -18,7 +19,7 @@ export const projects: Project[] = [
 	},
 	{
 		title: "Next Icons",
-		description: "Next Icons je open-source knihovna moderních SVG ikon navržená speciálně pro projekty v Reactu a Next.js. Ikony jsou postavené na 24x24 gridu, mají čistý a konzistentní styl a snadno se přizpůsobují pomocí barev nebo velikosti. Knihovna je ideální pro vývojáře, kteří chtějí lehké a elegantní ikony.",
+		description: "Knihovna moderních SVG ikon navržená speciálně pro projekty v Reactu a Next.js. Ikony jsou postavené na 24x24 gridu, mají čistý a konzistentní styl a snadno se přizpůsobují pomocí barev nebo velikosti. Knihovna je ideální pro vývojáře, kteří chtějí lehké a elegantní ikony.",
 		images: ["/assets/projects/nexticons-1.png", "/assets/projects/nexticons-2.png", "/assets/projects/nexticons-3.png", "/assets/projects/nexticons-4.png"],
 		category: "Tvorba Webu",
 		createdAt: "2025-01-01"
@@ -60,11 +61,12 @@ export const projects: Project[] = [
 	},
 	{
 		title: "Nikola Jahnová",
-		description: "Pro certifikovanou specialistku na pojištění, jsme vytvořili moderní a důvěryhodně působící webovou prezentaci. Cílem bylo zvýšit online viditelnost a umožnit potenciálním klientům snadný kontakt i orientaci v nabízených službách. Design je postavený na kombinaci syté tmavé a zlaté barvy, což podtrhuje profesionalitu a zároveň přehlednost a výsledkem je elegantní web.",
+		description: "Pro certifikovanou specialistku na pojištění, jsme vytvořili moderní a důvěryhodně působící webovou stránku. Cílem bylo zvýšit online viditelnost a umožnit potenciálním klientům snadný kontakt i orientaci v nabízených službách. Design je postavený na kombinaci syté tmavé a zlaté barvy, což podtrhuje profesionalitu.",
 		images: ["/assets/projects/nikolaj-1.png", "/assets/projects/nikolaj-2.png", "/assets/projects/nikolaj-3.png","/assets/projects/nikolaj-4.png"],
 		category: "Tvorba Webu",
 		createdAt: "2025-04-08"
 	},
+	//! -------------------- VIDEO PRODUKCE -------------------- //
 	{
 		category: "Video Produkce",
 		youtubeId: "lLoYeZfd5Nw",

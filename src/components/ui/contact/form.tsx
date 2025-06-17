@@ -1,12 +1,13 @@
 "use client";
 
-import { OpenSansBold, OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
+import { OpenSansMedium, OpenSansRegular } from "@/lib/fonts";
 import { EMAIL_ADDRESS, PHONE_NUMBER } from "@/lib/constants";
 import { blacklistedMails } from "@/utils/blacklistedMails";
 
 import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
-import { RiSendPlane2Line, RiPhoneLine } from "react-icons/ri";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { RiPhoneLine } from "react-icons/ri";
+import { LuSend } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -27,7 +28,7 @@ export const ContactForm = () => {
 		email: EMAIL_ADDRESS,
 		phone: PHONE_NUMBER,
 		//prettier-ignore
-		message: "Popište detailně Váš požadavek co od nás potřebujete, jestli již máte nějaké podklady tak je připojte. Poskytněte nám co nejvíce informací pro rychlejší komunikaci...",
+		message: "Popište detailně Váš požadavek co od nás potřebujete, jestli již máte nějaké podklady tak je uveďte. Poskytněte nám co nejvíce informací pro rychlejší komunikaci...",
 	};
 
 	//prettier-ignore
@@ -152,7 +153,7 @@ export const ContactForm = () => {
 	};
 
 	return (
-		<form className="flex w-full flex-col space-y-4" onSubmit={handleFormSubmit}>
+		<form className="flex w-full max-w-lg flex-col space-y-4" onSubmit={handleFormSubmit}>
 			{Object.keys(initialFormState).map((field) => (
 				<div key={field} className="relative w-full">
 					<label htmlFor={field} className={`${OpenSansMedium.className} block text-[0.9rem] text-[#000000]`}>
@@ -229,7 +230,7 @@ export const ContactForm = () => {
 			<div className="mt-1 flex flex-col gap-4 lg:flex-row">
 				<motion.button
 					type="submit"
-					className={`${OpenSansBold.className} flex flex-1 cursor-pointer items-center justify-center rounded-lg bg-[#000000] px-4 py-2 text-base text-[#FFFFFF] disabled:cursor-not-allowed`}
+					className={`${OpenSansMedium.className} flex flex-1 cursor-pointer items-center justify-center rounded-lg bg-[#000000] px-4 py-2 text-base text-[#FFFFFF] disabled:cursor-not-allowed`}
 					whileTap={{ scale: 0.9 }}
 					disabled={isDataSubmitting || !canDataSubmit}
 				>
@@ -237,17 +238,17 @@ export const ContactForm = () => {
 						<div className="flex h-7 w-7 animate-spin items-center justify-center rounded-full border-t-2 border-r-2 border-[#ffffff]" />
 					) : (
 						<span className="flex items-center justify-center">
+							<LuSend size={20} className="mr-2" aria-hidden="true" />
 							Odeslat
-							<RiSendPlane2Line size={20} className="ml-2" aria-hidden="true" />
 						</span>
 					)}
 				</motion.button>
 
 				<Link
 					href={`tel:${PHONE_NUMBER}`}
-					className={`${OpenSansBold.className} flex flex-1 cursor-pointer items-center justify-center rounded-lg border-2 border-[#000000] bg-[#FFFFFF] px-4 py-2 text-base text-[#000000]`}
+					className={`${OpenSansMedium.className} flex flex-1 cursor-pointer items-center justify-center rounded-lg border-2 border-[#000000] bg-[#FFFFFF] px-4 py-2 text-base text-[#000000]`}
 				>
-					<RiPhoneLine size={20} className="mr-2" />
+					<RiPhoneLine size={22} className="mr-2" aria-hidden="true" />
 					Zavolejte nám
 				</Link>
 			</div>
